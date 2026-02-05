@@ -1,1 +1,3 @@
-# Luokkavarausj-rjestelm-
+# Luokkavarausjärjestelmä
+
+Rakennetaan selainpohjainen luokkavarausjärjestelmä
