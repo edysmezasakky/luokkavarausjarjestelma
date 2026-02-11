@@ -1,3 +1,5 @@
 # Luokkavarausjärjestelmä
 
 Rakennetaan selainpohjainen luokkavarausjärjestelmä
+
+Käyttäjän tarinnat
