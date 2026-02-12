@@ -1,19 +1,12 @@
 <?php
 require_once '../functions.php';
 require_login();
+
+include 'header.php';
 ?>
-<!doctype html>
-<html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Hallintapaneeli</title>
-</head>
+<h1>Tervetuloa</h1>
+<p>Tämä sivu vaatii kirjautumisen.</p>
+<p><a href="logout.php">Kirjaudu ulos</a></p>
 
-<body>
-  <h1>Tervetuloa</h1>
-  <p>Tämä sivu vaatii kirjautumisen.</p>
-  <p><a href="logout.php">Kirjaudu ulos</a></p>
-</body>
-
-</html>
+<?php include 'footer.php' ?>
