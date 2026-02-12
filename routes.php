@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\AboutController;
+use App\Controllers\HelloController;
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
 use App\Controllers\ClassController;
@@ -24,3 +26,8 @@ $router->get('/dashboard', [DashboardController::class, 'index']);
 // admin routes
 $router->get('/admin/classes/create', [ClassController::class, 'create']);
 $router->post('/admin/classes', [ClassController::class, 'store']);
+
+// esimerki sivut
+$router->get('/about', [AboutController::class, 'index']);
+$router->get('/hello', [HelloController::class, 'showHelloForm']);
+$router->post('/hello', [HelloController::class, 'sayHello']);
