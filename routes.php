@@ -7,6 +7,7 @@ use App\Controllers\ClassController;
 // Define Routes (The Map)
 // Format: URL -> [Controller Class, Method Name]
 
+
 // public routes
 $router->get('/', [AuthController::class, 'showLoginForm']);
 $router->get('/login', [AuthController::class, 'showLoginForm']);

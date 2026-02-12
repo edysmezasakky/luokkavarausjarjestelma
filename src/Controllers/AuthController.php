@@ -34,7 +34,7 @@ class AuthController
             redirect('login');
         }
         try {
-            $pdo = (new Database()->connect());
+            $pdo = (new Database())->connect();
             $stmt = $pdo->prepare('SELECT user_id, role, password_hash FROM users WHERE email = :email');
             $stmt->execute(['email' => $email]);
             $user = $stmt->fetch();
@@ -49,12 +49,10 @@ class AuthController
             // Kirjautuminen onnistui
             Auth::login($user['user_id'], $user['role']);
             redirect('dashboard');
-
         } catch (\PDOException $e) {
             Flash::make('error', 'Jotain meni vaarin.');
             // die('Tietokantavirhe: ' . $e->getMessage());
         }
-
     }
 
     public function logout()
@@ -70,7 +68,6 @@ class AuthController
             'pageTitle' => 'Register to Dashboard',
             'token' => Auth::generateCsrfToken(),
         ]);
-
     }
 
     public function register()
@@ -91,7 +88,7 @@ class AuthController
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-            $errors [] = 'Virheellinen sähköpostiosoite.';
+            $errors[] = 'Virheellinen sähköpostiosoite.';
         }
         if (strlen($password) < 8) {
             $errors[] = 'Salasanan tulee olla vähintään 8 merkkiä
@@ -113,7 +110,7 @@ pitkä.';
 
         // Tarkista, onko käyttäjänimi tai sähköposti jo käytössä
         try {
-            $pdo = (new Database()->connect());
+            $pdo = (new Database())->connect();
             $stmt = $pdo->prepare('SELECT user_id FROM users WHERE email = :email');
             $stmt->execute(['email' => $email]);
             $existing = $stmt->fetch();
@@ -128,8 +125,8 @@ pitkä.';
 
             $insert = $pdo->prepare('INSERT INTO users (email, password_hash) VALUES (:email, :password_hash)');
             $insert->execute([
-            'email' => $email,
-            'password_hash' => $password_hash,
+                'email' => $email,
+                'password_hash' => $password_hash,
             ]);
 
             echo '<p>Rekisteröinti onnistui. <a href="/login">Kirjaudu sisään</a></p>';
@@ -137,6 +134,5 @@ pitkä.';
             // Kehitysvaiheessa virheen tulostus voi auttaa, tuotannossa lokita
             die('Tietokantavirhe:' . $e->getMessage());
         }
-
     }
 }

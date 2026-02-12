@@ -27,8 +27,25 @@ class Router
      */
     public function dispatch($uri, $method)
     {
-        // Strip query strings (e.g., ?id=1) from the URI
-        $uri = parse_url($uri, PHP_URL_PATH);
+        // Remove query string
+        $uri = parse_url($uri, PHP_URL_PATH) ?: '/';
+
+        $scriptName = $_SERVER['SCRIPT_NAME'];
+        $basePath   = dirname($scriptName);
+
+        // Normalize: remove trailing slash, but keep root as "/"
+        if ($basePath === '/' || $basePath === '\\') {
+            $basePath = '';
+        }
+
+        // Remove the base path prefix from the URI
+        if (str_starts_with($uri, $basePath)) {
+            $uri = substr($uri, strlen($basePath)) ?: '/';
+        }
+
+        // normalize multiple slashes, trailing slash, etc.
+        $uri = preg_replace('#/{2,}#', '/', $uri);
+        $uri = rtrim($uri, '/') ?: '/';
 
         // Check if the route exists
         if (array_key_exists($uri, $this->routes[$method])) {
