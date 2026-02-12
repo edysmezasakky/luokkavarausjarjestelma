@@ -1,18 +1,7 @@
-<?php
-require_once '../functions.php';
-$token = generate_csrf_token();
-?>
-<!doctype html>
-<html>
+<?php require __DIR__ . '/partials/header.view.php'; ?>
 
-<head>
-  <meta charset="utf-8">
-  <title>Rekisteröidy</title>
-</head>
-
-<body>
   <h1>Rekisteröidy</h1>
-  <form action="register_process.php" method="post"
+  <form action="<?= url('register') ?>" method="post"
     novalidate>
     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
     <label>
@@ -32,7 +21,6 @@ $token = generate_csrf_token();
     </label><br><br>
     <button type="submit">Rekisteröidy</button>
   </form>
-  <p>Onko sinulla tili? <a href="login.php">Kirjaudu</a></p>
-</body>
+  <p>Onko sinulla tili? <a href="<?= url('login') ?>">Kirjaudu</a></p>
 
-</html>
+<?php require __DIR__ . '/partials/footer.view.php'; ?>
