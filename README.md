@@ -13,7 +13,4 @@ Käyttäjän tarinnat
 
 # Code formatting VS Code
 
-Install the `PHP CS Fixer` extension by Junstyle in VS Code.
-
-Name: PHP CS Fixer
-ID: junstyle.php-cs-fixer
+Install the `Intelephense` by `Ben Mewburn` extension.

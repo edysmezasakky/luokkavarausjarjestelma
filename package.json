@@ -1,0 +1,27 @@
+{
+  "name": "html",
+  "version": "1.0.0",
+  "description": "Rakennetaan selainpohjainen luokkavarausjärjestelmä",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css": "npx @tailwindcss/cli -i src/style.css -o public/style.css",
+    "watch": "npx @tailwindcss/cli -i ./src/style.css -o ./public/style.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edysmezasakky/luokkavarausjarjestelma.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/edysmezasakky/luokkavarausjarjestelma/issues"
+  },
+  "homepage": "https://github.com/edysmezasakky/luokkavarausjarjestelma#readme",
+  "devDependencies": {
+    "daisyui": "^5.5.18",
+    "tailwindcss": "^4.1.18"
+  }
+}

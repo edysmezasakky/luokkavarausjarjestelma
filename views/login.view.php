@@ -1,18 +1,7 @@
-<?php
-require_once '../functions.php';
-$token = generate_csrf_token();
-?>
-<!doctype html>
-<html>
+<?php require __DIR__ . '/partials/header.view.php'; ?>
 
-<head>
-  <meta charset="utf-8">
-  <title>Kirjaudu sisään</title>
-</head>
-
-<body>
   <h1>Kirjaudu</h1>
-  <form action="login_process.php" method="post">
+  <form action="<?= url('login') ?>" method="post">
     <input type="hidden" name="csrf_token" value="<?php echo
                                                   htmlspecialchars($token); ?>">
     <label>
@@ -23,9 +12,8 @@ $token = generate_csrf_token();
       Salasana:
       <input type="password" name="password" required>
     </label><br><br>
-    <button type="submit">Kirjaudu</button>
+    <button class="btn btn-primary" type="submit">Kirjaudu</button>
   </form>
-  <p>Ei tiliä? <a href="register.php">Rekisteröidy</a></p>
-</body>
+  <p>Ei tiliä? <a href="<?= url('register') ?>">Rekisteröidy</a></p>
 
-</html>
+<?php require __DIR__ . '/partials/footer.view.php'; ?>
