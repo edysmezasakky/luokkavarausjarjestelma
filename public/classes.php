@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__.'/config/db.php';
+define('__ROOT__' , dirname(dirname(__FILE__)));
+
+require_once (__ROOT__. '/config/db.php');
 
 $sql = "SELECT classroom_id, name, location, description, capacity, created_at FROM classrooms ORDER BY name ASC";
 $stmt = $pdo->query($sql);
@@ -17,6 +19,7 @@ $classes = $stmt->fetchAll();
         table {border-collapse: collapse; width: 100%;}
         th, td {border: 1px solid #ddd; padding: 8px;}
         th {background: #f4f4f4; text-align: left;}
+        h1 {text-align: center;}
     </style>
 </head>
 <body>
