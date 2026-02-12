@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1deb1+deb12u1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: 11.02.2026 klo 16:38
--- Palvelimen versio: 10.11.14-MariaDB-0+deb12u2
--- PHP Version: 8.2.29
+-- Host: db:3306
+-- Generation Time: Feb 12, 2026 at 08:37 AM
+-- Server version: 11.8.5-MariaDB-ubu2404-log
+-- PHP Version: 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `219261`
+-- Database: `db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `classrooms`
+-- Table structure for table `classrooms`
 --
 
 CREATE TABLE `classrooms` (
@@ -38,7 +38,7 @@ CREATE TABLE `classrooms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Vedos taulusta `classrooms`
+-- Dumping data for table `classrooms`
 --
 
 INSERT INTO `classrooms` (`classroom_id`, `name`, `location`, `capacity`, `is_active`, `created_at`, `updated_at`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `classrooms` (`classroom_id`, `name`, `location`, `capacity`, `is_ac
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `reservations`
+-- Table structure for table `reservations`
 --
 
 CREATE TABLE `reservations` (
@@ -66,15 +66,15 @@ CREATE TABLE `reservations` (
 -- --------------------------------------------------------
 
 --
--- Rakenne taululle `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` text NOT NULL,
   `password_hash` text NOT NULL,
-  `full_name` text NOT NULL,
-  `role` text NOT NULL,
+  `full_name` text DEFAULT NULL,
+  `role` text NOT NULL DEFAULT 'opiskelija',
   `phone` text DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` date NOT NULL DEFAULT current_timestamp(),
@@ -82,11 +82,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Vedos taulusta `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `email`, `password_hash`, `full_name`, `role`, `phone`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'arttu.tuhkanen@edu.sakky.fi', 'S@lasana', 'Arttu Tuhkanen', 'Opiskelia', '040', 1, '2026-02-11', '2026-02-11');
+(1, 'arttu.tuhkanen@edu.sakky.fi', 'S@lasana', 'Arttu Tuhkanen', 'Opiskelia', '040', 1, '2026-02-11', '2026-02-11'),
+(3, 'admin@edu.sakky.fi', '$2y$12$yLkOCM4XgrRfqyJ.AUffR.QqHx4ZXBYo8t1CEPlO6vp.Jxvxnw3de', NULL, 'admin', NULL, 1, '2026-02-12', '2026-02-12'),
+(4, 'opiskelija@edu.sakky.fi', '$2y$12$BZi3IiddxTPEznkMgCo5gOqlvSmeoUAMOZX/StEm/OcbyNUuSq7Zu', NULL, 'opiskelija', NULL, 1, '2026-02-12', '2026-02-12');
 
 --
 -- Indexes for dumped tables
@@ -134,14 +136,14 @@ ALTER TABLE `reservations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Rajoitteet vedostauluille
+-- Constraints for dumped tables
 --
 
 --
--- Rajoitteet taululle `reservations`
+-- Constraints for table `reservations`
 --
 ALTER TABLE `reservations`
   ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
