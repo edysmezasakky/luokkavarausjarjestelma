@@ -2,37 +2,36 @@
 require_once '../functions.php';
 $token = generate_csrf_token();
 ?>
-<!doctype html>
-<html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Rekisteröidy</title>
-</head>
+<?php include 'templates/html.php'; ?>
 
 <body>
-  <h1>Rekisteröidy</h1>
-  <form action="register_process.php" method="post"
-    novalidate>
-    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
-    <label>
-      Sähköposti:
-      <input type="email" name="email" required
-        maxlength="255">
-    </label><br><br>
-    <label>
-      Salasana:
-      <input type="password" name="password" required
-        minlength="8">
-    </label><br><br>
-    <label>
-      Vahvista salasana:
-      <input type="password" name="password_confirm" required
-        minlength="8">
-    </label><br><br>
-    <button type="submit">Rekisteröidy</button>
-  </form>
-  <p>Onko sinulla tili? <a href="login.php">Kirjaudu</a></p>
-</body>
+  <main style="margin: auto;">
+    <div style="width: 20rem">
 
-</html>
+      <h1>Rekisteröidy</h1>
+      <?php include 'templates/flash.php'; ?>
+      <form action="register_process.php" method="post"
+        novalidate>
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
+        <div class="form-item">
+          <label for="email" class="form-label">
+            Sähköposti:</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+
+        <div class="form-item">
+          <label for="password" class="form-label">
+            Salasana:</label>
+          <input type="password" name="password" id="password" required>
+        </div>
+        <div class="form-item">
+          <label for="password_confirm" class="form-label">
+            Salasana:</label>
+          <input type="password" name="password_confirm" id="password_confirm" required>
+        </div>
+        <button class="btn btn-default" type="submit">Rekisteröidy</button>
+      </form>
+      <p>Onko sinulla tili? <a class="btn btn-link" href="login.php">Kirjaudu</a></p>
+
+      <?php include 'templates/footer.php'; ?>

@@ -4,8 +4,7 @@ require_once '../db.php';
 require_once '../functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: register.php');
-    exit;
+    redirect('register.php');
 }
 
 // CSRF
@@ -22,25 +21,18 @@ $password_confirm = $_POST['password_confirm'] ?? '';
 $errors = [];
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-    $errors [] = 'Virheellinen sähköpostiosoite.';
+    flash_make('error', 'Virheellinen sähköpostiosoite.');
+    redirect('register.php');
 }
 if (strlen($password) < 8) {
-    $errors[] = 'Salasanan tulee olla vähintään 8 merkkiä
-pitkä.';
+    flash_make('error', 'Salasanan tulee olla vähintään 8 merkkiä
+pitkä.');
+    redirect('register.php');
 }
 
 if ($password !== $password_confirm) {
-    $errors[] = 'Salasanat eivät täsmää.';
-}
-
-if ($errors) {
-    foreach ($errors as $e) {
-        echo '<p>' . htmlspecialchars($e) . '</p>';
-    }
-
-    echo '<p><a href="register.php">Palaa takaisin</a></p>';
-    exit;
+    flash_make('error', 'Salasanat eivät täsmää.');
+    redirect('register.php');
 }
 
 // Tarkista, onko käyttäjänimi tai sähköposti jo käytössä
@@ -49,7 +41,8 @@ try {
     $stmt->execute(['email' => $email]);
     $existing = $stmt->fetch();
     if ($existing) {
-        die('Käyttäjänimi tai sähköposti on jo käytössä. <a href="register.php">Takaisin</a>');
+        flash_make('error', 'Käyttäjänimi tai sähköposti on jo käytössä.');
+        redirect('register.php');
     }
     // Tallenna uusi käyttäjä
     $password_hash = password_hash(
@@ -59,12 +52,14 @@ try {
 
     $insert = $pdo->prepare('INSERT INTO users (email, password_hash) VALUES (:email, :password_hash)');
     $insert->execute([
-    'email' => $email,
-    'password_hash' => $password_hash,
+        'email' => $email,
+        'password_hash' => $password_hash,
     ]);
 
-    echo '<p>Rekisteröinti onnistui. <a href="login.php">Kirjaudu sisään</a></p>';
+    flash_make('success', 'Rekisteröinti onnistui. Kirjaudu sisään<');
+    redirect('login.php');
 } catch (PDOException $e) {
     // Kehitysvaiheessa virheen tulostus voi auttaa, tuotannossa lokita
-    die('Tietokantavirhe:' . $e->getMessage());
+    flash_make('error', 'Joku meni väärin.');
+    redirect('login.php');
 }
