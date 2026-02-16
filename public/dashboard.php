@@ -1,19 +1,16 @@
 <?php
 require_once '../functions.php';
 require_login();
+
+$pageTitle = "Oma Dashboard";
 ?>
-<!doctype html>
-<html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Hallintapaneeli</title>
-</head>
+<?php include 'templates/aside.php'; ?>
 
-<body>
-  <h1>Tervetuloa</h1>
-  <p>Tämä sivu vaatii kirjautumisen.</p>
-  <p><a href="logout.php">Kirjaudu ulos</a></p>
-</body>
+<h1>Tervetuloa</h1>
+<p>Tämä sivu vaatii kirjautumisen.</p>
+<p><a href="logout.php">Kirjaudu ulos</a></p>
 
-</html>
+<?php
+include 'templates/footer.php';
+?>

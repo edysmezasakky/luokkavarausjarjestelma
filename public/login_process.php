@@ -3,8 +3,7 @@
 require_once '../db.php';
 require_once '../functions.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: login.php');
-    exit;
+    redirect('login.php');
 }
 
 $csrf = $_POST['csrf_token'] ?? '';
@@ -15,8 +14,8 @@ if (!validate_csrf_token($csrf)) {
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 if ($email === '' || $password === '') {
-    die('Täytä kaikki kentät. <a
-href="login.php">Takaisin</a>');
+    flash_make('error', 'Täytä kaikki kentät.');
+    redirect('login.php');
 }
 
 try {
@@ -24,12 +23,12 @@ try {
     $stmt->execute(['email' => $email]);
     $user = $stmt->fetch();
     if (!$user) {
-        die('Käyttäjää ei löydy. <a
-href="login.php">Takaisin</a>');
+        flash_make('error', 'Käyttäjää ei löydy.');
+        redirect('login.php');
     }
     if (!password_verify($password, $user['password_hash'])) {
-        die('Virheellinen salasana. <a
-ef="login.php">Takaisin</a>');
+        flash_make('error', 'Virheellinen salasana.');
+        redirect('login.php');
     }
     // Kirjautuminen onnistui
     session_regenerate_id(true);
@@ -37,5 +36,6 @@ ef="login.php">Takaisin</a>');
     header('Location: dashboard.php');
     exit;
 } catch (PDOException $e) {
-    die('Tietokantavirhe: ' . $e->getMessage());
+    flash_make('error', 'Joku meni vaarin.');
+    redirect('login.php');
 }

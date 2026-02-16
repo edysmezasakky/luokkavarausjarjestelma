@@ -1,31 +1,38 @@
 <?php
 require_once '../functions.php';
 $token = generate_csrf_token();
-?>
-<!doctype html>
-<html>
 
-<head>
-  <meta charset="utf-8">
-  <title>Kirjaudu sisään</title>
-</head>
+$pageTitle = "Kirjaudu sisaan";
+
+?>
+
+<?php include 'templates/html.php'; ?>
 
 <body>
-  <h1>Kirjaudu</h1>
-  <form action="login_process.php" method="post">
-    <input type="hidden" name="csrf_token" value="<?php echo
-                                                  htmlspecialchars($token); ?>">
-    <label>
-      Sähköposti:
-      <input type="email" name="email" required>
-    </label><br><br>
-    <label>
-      Salasana:
-      <input type="password" name="password" required>
-    </label><br><br>
-    <button type="submit">Kirjaudu</button>
-  </form>
-  <p>Ei tiliä? <a href="register.php">Rekisteröidy</a></p>
-</body>
+  <main style="margin: auto;">
+    <div style="width: 20rem">
 
-</html>
+      <h1>Kirjaudu</h1>
+      <?php include 'templates/flash.php'; ?>
+
+      <form action="login_process.php" method="post" novalidate>
+        <input type="hidden" name="csrf_token" value="<?php echo
+                                                      htmlspecialchars($token); ?>">
+        <div class="form-item">
+          <label for="email" class="form-label">
+            Sähköposti:</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+
+        <div class="form-item">
+          <label for="password" class="form-label">
+            Salasana:</label>
+          <input type="password" name="password" id="password" required>
+        </div>
+        <button class="btn btn-ghost" type="submit">Kirjaudu</button>
+      </form>
+      <p>Ei tiliä? <a class="btn btn-link" href="register.php">Rekisteröidy</a></p>
+    </div>
+    <?php
+    include 'templates/footer.php';
+    ?>
